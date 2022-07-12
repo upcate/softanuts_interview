@@ -28,7 +28,7 @@ class GoldController extends AbstractController
      *
      * @return JsonResponse HTTP Json Response
      */
-    #[Route('/api/gold', methods: ['GET'])]
+    #[Route('/api/gold', methods: ['POST'])]
     public function index(GoldServiceInterface $goldService): JsonResponse
     {
         $file = file_get_contents(dirname(__DIR__).'/Files/data.json');
