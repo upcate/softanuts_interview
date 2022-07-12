@@ -9,8 +9,9 @@ function checkIfCorrectFormat($date, $format)
     return $d && $d->format($format) == $date;
 }
 
-function checkIfCorrectDate($date): bool {
-    if($date > '2013-01-01T00:00:00+00:00') {
+function checkIfCorrectDate($date): bool
+{
+    if ($date > '2013-01-01T00:00:00+00:00') {
         return true;
     } else {
         return false;
@@ -25,4 +26,3 @@ echo getenv('app.nbp_url');
     $endDate = substr($decoded['to'], 0, 10);
 
     echo $startDate . ' ' . $endDate;*/
-

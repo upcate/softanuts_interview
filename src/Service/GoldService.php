@@ -1,7 +1,9 @@
 <?php
+
 /**
  * GoldService.
  */
+
 namespace App\Service;
 
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -11,7 +13,6 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  */
 class GoldService implements GoldServiceInterface
 {
-
     /**
      * @var HttpClientInterface Http client interface
      */
@@ -39,21 +40,19 @@ class GoldService implements GoldServiceInterface
     {
         $sum = 0;
         $number = 0;
-
-        foreach($array as $data):
+        foreach ($array as $data) {
             $sum = $sum + $data['cena'];
             ++$number;
-        endforeach;
-
+        }
         $avgValue = $sum / $number;
 
-        return round($avgValue,2);
+        return round($avgValue, 2);
     }
 
     /**
      * Checks if date format (ISO-8601) is correct.
      *
-     * @param string $date Date to compare
+     * @param string $date   Date to compare
      * @param string $format Given format
      *
      * @return bool Boolean return
@@ -77,9 +76,9 @@ class GoldService implements GoldServiceInterface
     {
         if ($date > '2013-01-01T00:00:00+00:00') {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -97,7 +96,6 @@ class GoldService implements GoldServiceInterface
     public function makeExternalRequest(string $url): array
     {
         $response = $this->client->request('GET', $url);
-
         $content = $response->getContent();
 
         return json_decode($content, true);

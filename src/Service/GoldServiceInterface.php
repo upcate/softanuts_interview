@@ -1,7 +1,9 @@
 <?php
+
 /**
  * Interface of GoldService.
  */
+
 namespace App\Service;
 
 /**
@@ -14,7 +16,7 @@ interface GoldServiceInterface
      *
      * @see GoldService
      *
-     * @param array $arr Array
+     * @param array $array Array
      *
      * @return float Float return
      */
@@ -25,7 +27,7 @@ interface GoldServiceInterface
      *
      * @see GoldService
      *
-     * @param string $date Date
+     * @param string $date   Date
      * @param string $format Date format
      *
      * @return bool Boolean return
@@ -44,13 +46,11 @@ interface GoldServiceInterface
     public function checkIfCorrectDate(string $date): bool;
 
     /**
-     * Make external request with Http client.
+     * Make external request using Http client.
      *
-     * @see GoldService
+     * @param string $url Url
      *
-     * @param string $url
-     *
-     * @return array
+     * @return array Array return json decoded
      */
     public function makeExternalRequest(string $url): array;
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * GoldController.
  */
@@ -23,6 +24,8 @@ class GoldController extends AbstractController
      * After it receives a json response, it's being decoded and average gold prices are calculates.
      * After everything is done action return response in json format.
      *
+     * @param GoldServiceInterface $goldService Gold service interface
+     *
      * @return JsonResponse HTTP Json Response
      */
     #[Route('/api/gold', methods: ['GET'])]
@@ -36,16 +39,16 @@ class GoldController extends AbstractController
 
         if (!$goldService->checkIfCorrectFormat($decoded['from'], 'Y-m-d\TH:i:sP') || !$goldService->checkIfCorrectDate($decoded['from']) || !$goldService->checkIfCorrectFormat($decoded['to'], 'Y-m-d\TH:i:sP') || !$goldService->checkIfCorrectDate($decoded['to'])) {
             throw new BadRequestHttpException('Bad request data!');
-        } else {
-            $url = $this->getParameter('app.npb_url') . '/'.$startDate.'/'.$endDate.'/?format=json';
+        }
 
-            $response = $goldService->makeExternalRequest($url);
+        $url = $this->getParameter('app.npb_url').'/'.$startDate.'/'.$endDate.'/?format=json';
 
-            return $this->json([
+        $response = $goldService->makeExternalRequest($url);
+
+        return $this->json([
                 'from' => date(DATE_ISO8601, strtotime($response[0]['data'])),
                 'to' => date(DATE_ISO8601, strtotime(end($response)['data'])),
                 'avg' => $goldService->calculateAvg($response),
-            ]);
-        }
+        ]);
     }
 }

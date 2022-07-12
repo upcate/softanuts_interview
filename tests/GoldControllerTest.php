@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class GoldControllerTest extends WebTestCase
 {
-
     public function testGoldJanuary2021Single()
     {
         $client = static::createClient();
