@@ -18,16 +18,7 @@ function checkIfCorrectDate($date): bool {
 }
 
 
-$file = file_get_contents(dirname(__DIR__) . '/src/Files/data.json');
-
-$decoded = json_decode($file, true);
-
-
-    $a = checkIfCorrectFormat($decoded['from'], 'Y-m-d\TH:i:sP');
-    var_dump($a);
-
-    $b = checkIfCorrectDate($decoded['from']);
-    var_dump($b);
+echo getenv('app.nbp_url');
 
 
     /*$startDate = substr($decoded['from'], 0, 10);

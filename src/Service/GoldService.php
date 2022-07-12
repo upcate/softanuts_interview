@@ -4,11 +4,29 @@
  */
 namespace App\Service;
 
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+
 /**
  * Class GoldService.
  */
 class GoldService implements GoldServiceInterface
 {
+
+    /**
+     * @var HttpClientInterface Http client interface
+     */
+    private HttpClientInterface $client;
+
+    /**
+     * Constructor.
+     *
+     * @param HttpClientInterface $client Http client interface
+     */
+    public function __construct(HttpClientInterface $client)
+    {
+        $this->client = $client;
+    }
+
     /**
      * Function that calculates average prices from given array (date range).
      * 'cena' (price) element is written in Polish, because NBP api returns response in such a way.
@@ -29,9 +47,7 @@ class GoldService implements GoldServiceInterface
 
         $avgValue = $sum / $number;
 
-        $avgValue = number_format((float) $avgValue, 2, '.', '');
-
-        return $avgValue;
+        return round($avgValue,2);
     }
 
     /**
@@ -64,5 +80,26 @@ class GoldService implements GoldServiceInterface
         } else {
             return false;
         }
+    }
+
+    /**
+     * Function that makes http request using Http client.
+     *
+     * @param string $url Url for external request
+     *
+     * @return array Array of decoded json response
+     *
+     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
+     */
+    public function makeExternalRequest(string $url): array
+    {
+        $response = $this->client->request('GET', $url);
+
+        $content = $response->getContent();
+
+        return json_decode($content, true);
     }
 }

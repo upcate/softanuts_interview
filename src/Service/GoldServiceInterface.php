@@ -42,4 +42,15 @@ interface GoldServiceInterface
      * @return bool Boolean return
      */
     public function checkIfCorrectDate(string $date): bool;
+
+    /**
+     * Make external request with Http client.
+     *
+     * @see GoldService
+     *
+     * @param string $url
+     *
+     * @return array
+     */
+    public function makeExternalRequest(string $url): array;
 }
